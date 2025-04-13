@@ -1,0 +1,210 @@
+%PDF-1.3
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/Contents 4 0 R>>
+endobj
+4 0 obj
+<</Length 2077>>
+stream
+2 J
+0.57 w
+BT /F1 14.00 Tf ET
+BT 158.00 795.17 Td (Suricata IDS Lab Manual - Student Edition) Tj ET
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 753.25 Td (Objective) Tj ET Q
+BT /F2 11.00 Tf ET
+0.454 Tw
+q 0.000 g BT 31.19 725.20 Td (This lab teaches how to install and configure Suricata \(an open-source IDS\) on Ubuntu to detect Nmap SYN) Tj ET Q
+0 Tw
+q 0.000 g BT 31.19 702.52 Td (scans and ICMP floods launched from a Kali Linux VM. You will write custom rules and analyze alerts.) Tj ET Q
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 654.03 Td (Lab Requirements) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 31.19 625.99 Td (- Ubuntu VM \(with Suricata\)) Tj ET Q
+q 0.000 g BT 31.19 603.31 Td (- Kali Linux VM \(for scanning\)) Tj ET Q
+q 0.000 g BT 31.19 580.63 Td (- Same virtual network \(Bridged or Host-only\)) Tj ET Q
+q 0.000 g BT 31.19 557.96 Td (- Internet access on Ubuntu) Tj ET Q
+q 0.000 g BT 31.19 535.28 Td (- sudo privileges on both VMs) Tj ET Q
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 486.79 Td (Installing Suricata) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 31.19 458.74 Td (Run on Ubuntu:) Tj ET Q
+q 0.000 g BT 31.19 436.07 Td (sudo apt update && sudo apt upgrade -y) Tj ET Q
+q 0.000 g BT 31.19 413.39 Td (sudo apt install suricata suricata-update -y) Tj ET Q
+q 0.000 g BT 31.19 390.71 Td (sudo suricata-update) Tj ET Q
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 342.22 Td (Identify Network Interface) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 31.19 314.18 Td (Run: ip a) Tj ET Q
+q 0.000 g BT 31.19 291.50 Td (Note the interface with an IP \(e.g., enp0s8, eth0\). Use this in Suricata.) Tj ET Q
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 243.01 Td (Configure Rule Files) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 31.19 214.96 Td (Edit /etc/suricata/suricata.yaml) Tj ET Q
+q 0.000 g BT 31.19 192.29 Td (Make sure:) Tj ET Q
+q 0.000 g BT 31.19 169.61 Td (rule-files:) Tj ET Q
+q 0.000 g BT 31.19 146.93 Td (  - suricata.rules) Tj ET Q
+q 0.000 g BT 31.19 124.26 Td (  - local.rules) Tj ET Q
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 75.77 Td (Add Custom Nmap Detection Rule) Tj ET Q
+BT /F2 11.00 Tf ET
+
+endstream
+endobj
+5 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/Contents 6 0 R>>
+endobj
+6 0 obj
+<</Length 2083>>
+stream
+2 J
+0.57 w
+BT /F2 11.00 Tf ET
+BT /F1 14.00 Tf ET
+q 0.000 g BT 158.00 795.17 Td (Suricata IDS Lab Manual - Student Edition) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 31.19 756.38 Td (Edit /etc/suricata/rules/local.rules) Tj ET Q
+q 0.000 g BT 31.19 733.70 Td (Add:) Tj ET Q
+1.279 Tw
+q 0.000 g BT 31.19 711.03 Td (alert tcp any any -> any any \(msg:"Custom Nmap TCP Scan Detected"; flags:S; threshold:type both, track) Tj ET Q
+0 Tw
+q 0.000 g BT 31.19 688.35 Td (by_src, count 10, seconds 60; sid:1000001; rev:1;\)) Tj ET Q
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 639.86 Td (Restart Suricata) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 31.19 611.81 Td (sudo pkill suricata) Tj ET Q
+q 0.000 g BT 31.19 589.14 Td (sudo rm /var/run/suricata.pid) Tj ET Q
+q 0.000 g BT 31.19 566.46 Td (sudo suricata -c /etc/suricata/suricata.yaml -i enp0s8 -D) Tj ET Q
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 517.97 Td (Scan from Kali) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 31.19 489.93 Td (Run:) Tj ET Q
+q 0.000 g BT 31.19 467.25 Td (nmap -sS -T4 <Ubuntu-IP>) Tj ET Q
+q 0.000 g BT 31.19 444.57 Td (Optional:) Tj ET Q
+q 0.000 g BT 31.19 421.89 Td (nmap -sS -A -T4 <Ubuntu-IP>) Tj ET Q
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 373.40 Td (View Alerts) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 31.19 345.36 Td (On Ubuntu:) Tj ET Q
+q 0.000 g BT 31.19 322.68 Td (sudo tail -f /var/log/suricata/fast.log) Tj ET Q
+q 0.000 g BT 31.19 300.00 Td (grep -i nmap /var/log/suricata/eve.json) Tj ET Q
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 251.51 Td (Detect ICMP Floods) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 31.19 223.47 Td (Add to local.rules:) Tj ET Q
+0.586 Tw
+q 0.000 g BT 31.19 200.79 Td (alert icmp any any -> any any \(msg:"ICMP Flood Detected"; itype:8; threshold:type both, track by_src, count) Tj ET Q
+0 Tw
+q 0.000 g BT 31.19 178.11 Td (100, seconds 10; sid:9990002; rev:1;\)) Tj ET Q
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 129.63 Td (Retest and Check) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 31.19 101.58 Td (Run:) Tj ET Q
+q 0.000 g BT 31.19 78.90 Td (ping -f <Ubuntu-IP>) Tj ET Q
+q 0.000 g BT 31.19 56.22 Td (Or:) Tj ET Q
+
+endstream
+endobj
+7 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/Contents 8 0 R>>
+endobj
+8 0 obj
+<</Length 684>>
+stream
+2 J
+0.57 w
+BT /F2 11.00 Tf ET
+BT /F1 14.00 Tf ET
+q 0.000 g BT 158.00 795.17 Td (Suricata IDS Lab Manual - Student Edition) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 31.19 756.38 Td (sudo hping3 --icmp --flood <Ubuntu-IP>) Tj ET Q
+q 0.000 g BT 31.19 733.70 Td (Then:) Tj ET Q
+q 0.000 g BT 31.19 711.03 Td (sudo tail -f /var/log/suricata/fast.log) Tj ET Q
+BT /F1 12.00 Tf ET
+q 0.000 g BT 31.19 662.54 Td (Conclusion) Tj ET Q
+BT /F2 11.00 Tf ET
+1.906 Tw
+q 0.000 g BT 31.19 634.49 Td (You installed Suricata, configured rules, detected Nmap scans and ICMP floods, and viewed alerts. This) Tj ET Q
+0 Tw
+q 0.000 g BT 31.19 611.81 Td (builds hands-on cybersecurity monitoring skills.) Tj ET Q
+
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R 5 0 R 7 0 R ]
+/Count 3
+/MediaBox [0 0 595.28 841.89]
+>>
+endobj
+9 0 obj
+<</Type /Font
+/BaseFont /Helvetica-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+>>
+endobj
+10 0 obj
+<</Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 9 0 R
+/F2 10 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+11 0 obj
+<<
+/Producer (PyFPDF 1.7.2 http://pyfpdf.googlecode.com/)
+/CreationDate (D:20250413193122)
+>>
+endobj
+12 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000005236 00000 n 
+0000005533 00000 n 
+0000000009 00000 n 
+0000000087 00000 n 
+0000002214 00000 n 
+0000002292 00000 n 
+0000004425 00000 n 
+0000004503 00000 n 
+0000005335 00000 n 
+0000005436 00000 n 
+0000005648 00000 n 
+0000005758 00000 n 
+trailer
+<<
+/Size 13
+/Root 12 0 R
+/Info 11 0 R
+>>
+startxref
+5862
+%%EOF
